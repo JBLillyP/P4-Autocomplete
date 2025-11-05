@@ -34,56 +34,27 @@ public class BinarySearchLibrary {
 		return index + 1;
 	}
 
-	/**
-	 * Return smallest index of target in list using comp
-	 * Guaranteed to make ceiling(1 + log(list.size())) comparisons
-	 * 
-	 * @param list   is list of Items being searched
-	 * @param target is Item searched for
-	 * @param comp   how Items are compared for binary search
-	 * @return smallest index k such that comp.compare(list.get(k),target) == 0
-	 *         Return -1 if there is no such object in list.
-	 */
-	public static <T> int firstIndex(List<T> list,
-			T target, Comparator<T> comp) {
-		int low = -1;
-		int high = list.size();
-		while (low + 1 != high) {
-			int mid = (low + high) / 2; 
-			int cmp = comp.compare(list.get(mid), target);
-			if (cmp < 0) {
-				low = mid; 
-			} else {
-				high = mid; 
-			}
-		}
-			if (high < list.size() && comp.compare(list.get(high), target) == 0) {
-    		return high;
-			} else {
-    		return -1;
-	}
-			}
-		
+	public static <T> int firstIndex(List<T> list, T target, Comparator<T> comp) {
+    if (list.isEmpty()) return -1;
 
-	/**
-	 * Return the index of the last object (largest index)
-	 * o in parameter "equal" to target, that is
-	 * the last object o such that comp.compare(o,target) == 0.
-	 * Guaranteed to make ceiling(1 + log(list.size())) comparisons
-	 *
-	 * @param list   is the list of objects being searched
-	 * @param target is the object being searched for
-	 * @param comp   is how comparisons are made
-	 * @return index i such that comp.compare(list.get(i),target) == 0
-	 *         and there is no index > i such that this is true. Return -1
-	 *         if there is no such object in list.
-	 */
-	public static <T> int lastIndex(List<T> list,
-        T target, Comparator<T> comp) {
-
-    if (list.size() == 0) {
-        return -1;
+    int low = -1;
+    int high = list.size();
+    while (low + 1 != high) {
+        int mid = (low + high) / 2;
+        int cmp = comp.compare(list.get(mid), target);
+        if (cmp < 0) {
+            low = mid;
+        } else {
+            high = mid;
+        }
     }
+
+    // Only one final compare call here
+    return (high < list.size() && comp.compare(list.get(high), target) == 0) ? high : -1;
+}
+
+public static <T> int lastIndex(List<T> list, T target, Comparator<T> comp) {
+    if (list.isEmpty()) return -1;
 
     int low = -1;
     int high = list.size();
@@ -97,10 +68,7 @@ public class BinarySearchLibrary {
         }
     }
 
-    if (low >= 0 && comp.compare(list.get(low), target) == 0) {
-        return low;
-    }
-    return -1;
+    // Only one final compare call here
+    return (low >= 0 && comp.compare(list.get(low), target) == 0) ? low : -1;
 }
-
 }
