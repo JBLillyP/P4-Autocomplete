@@ -79,22 +79,28 @@ public class BinarySearchLibrary {
 	 *         if there is no such object in list.
 	 */
 	public static <T> int lastIndex(List<T> list,
-			T target, Comparator<T> comp) {
-		int low = 0;
-		int high = list.size();
-		while (low + 1 != high) {
-			int mid = (low + high) / 2; 
-			int cmp = comp.compare(list.get(mid), target);
-			if (cmp > 0) {
-				high = mid; 
-			} else {
-				low = mid; 
-			}
-		}
-			if (high < list.size() && comp.compare(list.get(high), target) == 0) {
-    		return low;
-			} else {
-    		return -1;
-	}
+        T target, Comparator<T> comp) {
+
+    if (list.size() == 0) {
+        return -1;
+    }
+
+    int low = -1;
+    int high = list.size();
+    while (low + 1 != high) {
+        int mid = (low + high) / 2;
+        int cmp = comp.compare(list.get(mid), target);
+        if (cmp > 0) {
+            high = mid;
+        } else {
+            low = mid;
+        }
+    }
+
+    if (low >= 0 && comp.compare(list.get(low), target) == 0) {
+        return low;
+    }
+    return -1;
 }
+
 }
